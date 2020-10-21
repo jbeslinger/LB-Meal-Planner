@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtCalendarURL = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnClearDatabase = new System.Windows.Forms.Button();
+            this.btnClearUserData = new System.Windows.Forms.Button();
+            this.btnDeleteCredentials = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // txtCalendarURL
             // 
-            this.textBox1.Location = new System.Drawing.Point(93, 10);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(179, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "primary";
+            this.txtCalendarURL.Location = new System.Drawing.Point(93, 10);
+            this.txtCalendarURL.Name = "txtCalendarURL";
+            this.txtCalendarURL.Size = new System.Drawing.Size(179, 20);
+            this.txtCalendarURL.TabIndex = 0;
+            this.txtCalendarURL.Text = "primary";
             // 
             // label1
             // 
@@ -52,49 +52,52 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Calendar URL";
             // 
-            // button1
+            // btnClearDatabase
             // 
-            this.button1.AutoSize = true;
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.Location = new System.Drawing.Point(79, 37);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(127, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Clear Recipe Database";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnClearDatabase.AutoSize = true;
+            this.btnClearDatabase.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnClearDatabase.Location = new System.Drawing.Point(79, 37);
+            this.btnClearDatabase.Name = "btnClearDatabase";
+            this.btnClearDatabase.Size = new System.Drawing.Size(127, 23);
+            this.btnClearDatabase.TabIndex = 1;
+            this.btnClearDatabase.Text = "Clear Recipe Database";
+            this.btnClearDatabase.UseVisualStyleBackColor = true;
+            this.btnClearDatabase.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnClearUserData
             // 
-            this.button2.AutoSize = true;
-            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.Location = new System.Drawing.Point(96, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(92, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Clear User Data";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnClearUserData.AutoSize = true;
+            this.btnClearUserData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnClearUserData.Location = new System.Drawing.Point(96, 66);
+            this.btnClearUserData.Name = "btnClearUserData";
+            this.btnClearUserData.Size = new System.Drawing.Size(92, 23);
+            this.btnClearUserData.TabIndex = 2;
+            this.btnClearUserData.Text = "Clear User Data";
+            this.btnClearUserData.UseVisualStyleBackColor = true;
+            this.btnClearUserData.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // btnDeleteCredentials
             // 
-            this.button3.AutoSize = true;
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.Location = new System.Drawing.Point(68, 95);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(148, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Delete Calendar Credentials";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnDeleteCredentials.AutoSize = true;
+            this.btnDeleteCredentials.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnDeleteCredentials.Location = new System.Drawing.Point(68, 95);
+            this.btnDeleteCredentials.Name = "btnDeleteCredentials";
+            this.btnDeleteCredentials.Size = new System.Drawing.Size(148, 23);
+            this.btnDeleteCredentials.TabIndex = 3;
+            this.btnDeleteCredentials.Text = "Delete Calendar Credentials";
+            this.btnDeleteCredentials.UseVisualStyleBackColor = true;
+            this.btnDeleteCredentials.Click += new System.EventHandler(this.button3_Click);
             // 
             // frmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 128);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnDeleteCredentials);
+            this.Controls.Add(this.btnClearUserData);
+            this.Controls.Add(this.btnClearDatabase);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtCalendarURL);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -107,10 +110,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtCalendarURL;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnClearDatabase;
+        private System.Windows.Forms.Button btnClearUserData;
+        private System.Windows.Forms.Button btnDeleteCredentials;
     }
 }

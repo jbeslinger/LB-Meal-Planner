@@ -59,6 +59,8 @@ namespace LB_Meal_Planner
                 chklstRecipes.Items.Add(rdr.GetInt32(0) + " - " + rdr.GetString(1),
                     rdr.GetInt32(2) == 1 ? true : false);
             }
+
+            tbtnEditRecipe.Enabled = false; tbtnDeleteRecipe.Enabled = false; tbtnSave.Enabled = false;
         }
         
         private void AddRecipe()
@@ -152,7 +154,7 @@ namespace LB_Meal_Planner
 
         private void tbtnSettings_Click(object sender, EventArgs e)
         {
-            new frmOptions().ShowDialog();
+            new frmOptions(con, this).ShowDialog();
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -172,7 +174,7 @@ namespace LB_Meal_Planner
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new frmOptions().ShowDialog();
+            new frmOptions(con, this).ShowDialog();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -54,7 +54,7 @@ namespace LB_Meal_Planner
                     "BreakfastTime int DEFAULT 0,BrunchTime int DEFAULT 0,LunchTime int DEFAULT 0,DinnerTime int DEFAULT 0,SupperTime int DEFAULT 0,SnackTime int DEFAULT 0," +
                     "BreakfastPeople int DEFAULT 1,BrunchPeople int DEFAULT 1,LunchPeople int DEFAULT 1,DinnerPeople int DEFAULT 1,SupperPeople int DEFAULT 1,SnackPeople int DEFAULT 1," +
                     "BreakfastServingsPerPerson int DEFAULT 1,BrunchServingsPerPerson int DEFAULT 1,LunchServingsPerPerson int DEFAULT 1,DinnerServingsPerPerson int DEFAULT 1,SupperServingsPerPerson int DEFAULT 1,SnackServingsPerPerson int DEFAULT 1" +
-                    ");";
+                    "); INSERT INTO `userprefs` DEFAULT VALUES;";
 
                 var cmd = new SQLiteCommand(con);
                 cmd.CommandText = sqlCreateTableRecipes;
