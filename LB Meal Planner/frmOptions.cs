@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace LB_Meal_Planner
@@ -17,6 +11,8 @@ namespace LB_Meal_Planner
         #region Members
         SQLiteConnection con;
         frmMain parentForm;
+
+        Regex regex = new Regex(@"^https:\/\/calendar\.google\.com\/calendar\/ical\/*", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
         #region Constructors
@@ -25,6 +21,13 @@ namespace LB_Meal_Planner
             InitializeComponent();
             this.con = con;
             this.parentForm = parentForm;
+
+            var cmd = new SQLiteCommand(con);
+            cmd.CommandText = "SELECT CalendarURL FROM `userprefs` WHERE ROWID = 1";
+            var rdr = cmd.ExecuteReader();
+            rdr.Read();
+
+            txtCalendarURL.Text = rdr.GetString(0);
         }
         #endregion
 
@@ -76,10 +79,27 @@ namespace LB_Meal_Planner
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnFormClosing(e);
+            string url = txtCalendarURL.Text;
+            var matches = regex.Matches(url);
+
+            if (url == "")
+            { url = "primary"; }
+            else if (url == "primary")
+            { }
+            else if (matches.Count == 0)
+            {
+                MessageBox.Show("This is not a valid Google Calendar address. " +
+                    "If you don't have a valid iCal address you may leave the textbox blank or type 'primary' to use your default calendar.",
+                    "Calendar URL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             var cmd = new SQLiteCommand(con);
-            cmd.CommandText = String.Format("UPDATE `userprefs` SET CalendarURL = '{0}' WHERE ROWID = 1", txtCalendarURL.Text);
+            cmd.CommandText = String.Format("UPDATE `userprefs` SET CalendarURL = '{0}' WHERE ROWID = 1", url);
             cmd.ExecuteNonQuery();
+            
+            base.OnFormClosing(e);
         }
         #endregion
     }

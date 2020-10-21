@@ -41,7 +41,6 @@
             this.txtCalendarURL.Name = "txtCalendarURL";
             this.txtCalendarURL.Size = new System.Drawing.Size(179, 20);
             this.txtCalendarURL.TabIndex = 0;
-            this.txtCalendarURL.Text = "primary";
             // 
             // label1
             // 
