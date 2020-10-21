@@ -61,17 +61,20 @@ namespace LB_Meal_Planner
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string credentialsPath = "credentials.json";
+            string credentialsPath = "token.json";
 
             if (MessageBox.Show("Are you sure you want to clear your Google Calendar credentials? You will be prompted to sign into a new Google account and authorize this program again if you choose 'Yes'.",
                 "Clear Calendar Credentials", MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                if (File.Exists(credentialsPath))
+                if (Directory.Exists(credentialsPath))
                 {
-                    File.Delete(credentialsPath);
+                    Directory.Delete(credentialsPath, true);
                     Console.WriteLine("Deleted.");
+
                     // Regen your calendar credentials
+                    if (Program.InitializeCredentials() > 0)
+                        Application.Exit();
                 }
                 this.Close();
             }

@@ -1,12 +1,22 @@
-﻿using System;
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using System;
 using System.Data.SQLite;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace LB_Meal_Planner
 {
     static class Program
     {
+        #region Static Fields
+        static string[] Scopes = { CalendarService.Scope.CalendarEvents };
+        static string ApplicationName = "LB Meal Planner";
+        #endregion
+
         #region Main
         [STAThread]
         static void Main()
@@ -14,7 +24,7 @@ namespace LB_Meal_Planner
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (InitializeDatabase() == 1)
+            if (InitializeCredentials() + InitializeDatabase() > 0)
                 return;
             
             Application.Run(new frmMain());
@@ -22,6 +32,43 @@ namespace LB_Meal_Planner
         #endregion
 
         #region Methods
+        public static int InitializeCredentials()
+        {
+            try
+            {
+                UserCredential credential;
+
+                using (var stream =
+                    new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+                {
+                    // The file token.json stores the user's access and refresh tokens, and is created
+                    // automatically when the authorization flow completes for the first time.
+                    string credPath = "token.json";
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                        GoogleClientSecrets.Load(stream).Secrets,
+                        Scopes,
+                        "user",
+                        CancellationToken.None,
+                        new FileDataStore(credPath, true)).Result;
+                    Console.WriteLine("Credential file saved to: " + credPath);
+                }
+
+                // Create Google Calendar API service.
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+                return 0;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Failed to initialize credentials for this reason:\n\n" +
+                    e.Message, "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 1;
+            }
+        }
+
         private static int InitializeDatabase()
         {
             string dbName = "database.db";
