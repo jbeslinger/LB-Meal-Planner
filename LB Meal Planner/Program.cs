@@ -98,7 +98,12 @@ namespace LB_Meal_Planner
                     "NumberOfDiffMeals int DEFAULT 2," +
                     "GenerateGroceryList int DEFAULT 0," +
                     "BreakfastChk int DEFAULT 0,BrunchChk int DEFAULT 0,LunchChk int DEFAULT 0,DinnerChk int DEFAULT 0,SupperChk int DEFAULT 0,SnackChk int DEFAULT 0," +
-                    "BreakfastTime int DEFAULT 0,BrunchTime int DEFAULT 0,LunchTime int DEFAULT 0,DinnerTime int DEFAULT 0,SupperTime int DEFAULT 0,SnackTime int DEFAULT 0," +
+                    "BreakfastTime int DEFAULT " + 9*60  + "," +
+                    "BrunchTime int DEFAULT "    + 10*60 + "," +
+                    "LunchTime int DEFAULT "     + 13*60 + "," +
+                    "DinnerTime int DEFAULT "    + 17*60 + "," +
+                    "SupperTime int DEFAULT "    + 20*60 + "," +
+                    "SnackTime int DEFAULT "     + 15*60 + "," +
                     "BreakfastPeople int DEFAULT 1,BrunchPeople int DEFAULT 1,LunchPeople int DEFAULT 1,DinnerPeople int DEFAULT 1,SupperPeople int DEFAULT 1,SnackPeople int DEFAULT 1," +
                     "BreakfastServingsPerPerson int DEFAULT 1,BrunchServingsPerPerson int DEFAULT 1,LunchServingsPerPerson int DEFAULT 1,DinnerServingsPerPerson int DEFAULT 1,SupperServingsPerPerson int DEFAULT 1,SnackServingsPerPerson int DEFAULT 1" +
                     "); INSERT INTO `userprefs` DEFAULT VALUES;";

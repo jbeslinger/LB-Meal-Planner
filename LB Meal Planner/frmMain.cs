@@ -158,7 +158,7 @@ namespace LB_Meal_Planner
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            new frmGenerateMeals().ShowDialog();
+            new frmGenerateMeals(con).ShowDialog();
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -183,7 +183,7 @@ namespace LB_Meal_Planner
 
         private void generateMealsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new frmGenerateMeals().ShowDialog();
+            new frmGenerateMeals(con).ShowDialog();
         }
 
         private void tbtnAddRecipe_Click(object sender, EventArgs e)

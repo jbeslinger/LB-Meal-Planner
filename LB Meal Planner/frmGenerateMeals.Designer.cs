@@ -31,8 +31,6 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.lblHowManyDays = new System.Windows.Forms.Label();
-            this.txtHowManyDays = new System.Windows.Forms.TextBox();
-            this.txtHowManyMeals = new System.Windows.Forms.TextBox();
             this.lblHowManyMeals = new System.Windows.Forms.Label();
             this.chkBreakfast = new System.Windows.Forms.CheckBox();
             this.horizontalDivider = new System.Windows.Forms.Label();
@@ -66,6 +64,8 @@
             this.timeSupper = new System.Windows.Forms.DateTimePicker();
             this.chkSupper = new System.Windows.Forms.CheckBox();
             this.chkGenerateGroceryList = new System.Windows.Forms.CheckBox();
+            this.numGenerateDays = new System.Windows.Forms.NumericUpDown();
+            this.numAlternateMeals = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numServingsBreakfast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPersonsBreakfast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPersonsBrunch)).BeginInit();
@@ -78,6 +78,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numServingsSnack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPersonsSupper)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numServingsSupper)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numGenerateDays)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAlternateMeals)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -109,20 +111,6 @@
             this.lblHowManyDays.Size = new System.Drawing.Size(138, 13);
             this.lblHowManyDays.TabIndex = 2;
             this.lblHowManyDays.Text = "Generate for this many days";
-            // 
-            // txtHowManyDays
-            // 
-            this.txtHowManyDays.Location = new System.Drawing.Point(157, 10);
-            this.txtHowManyDays.Name = "txtHowManyDays";
-            this.txtHowManyDays.Size = new System.Drawing.Size(100, 20);
-            this.txtHowManyDays.TabIndex = 0;
-            // 
-            // txtHowManyMeals
-            // 
-            this.txtHowManyMeals.Location = new System.Drawing.Point(230, 39);
-            this.txtHowManyMeals.Name = "txtHowManyMeals";
-            this.txtHowManyMeals.Size = new System.Drawing.Size(100, 20);
-            this.txtHowManyMeals.TabIndex = 1;
             // 
             // lblHowManyMeals
             // 
@@ -642,6 +630,25 @@
             this.chkGenerateGroceryList.Text = "Generate grocery list";
             this.chkGenerateGroceryList.UseVisualStyleBackColor = true;
             // 
+            // numGenerateDays
+            // 
+            this.numGenerateDays.Location = new System.Drawing.Point(157, 11);
+            this.numGenerateDays.Name = "numGenerateDays";
+            this.numGenerateDays.Size = new System.Drawing.Size(67, 20);
+            this.numGenerateDays.TabIndex = 31;
+            // 
+            // numAlternateMeals
+            // 
+            this.numAlternateMeals.Location = new System.Drawing.Point(228, 40);
+            this.numAlternateMeals.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.numAlternateMeals.Name = "numAlternateMeals";
+            this.numAlternateMeals.Size = new System.Drawing.Size(67, 20);
+            this.numAlternateMeals.TabIndex = 32;
+            // 
             // frmGenerateMeals
             // 
             this.AcceptButton = this.btnGenerate;
@@ -649,6 +656,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(443, 356);
+            this.Controls.Add(this.numAlternateMeals);
+            this.Controls.Add(this.numGenerateDays);
             this.Controls.Add(this.chkGenerateGroceryList);
             this.Controls.Add(this.numPersonsSnack);
             this.Controls.Add(this.numServingsSnack);
@@ -681,9 +690,7 @@
             this.Controls.Add(this.dateStartThisDay);
             this.Controls.Add(this.horizontalDivider);
             this.Controls.Add(this.chkBreakfast);
-            this.Controls.Add(this.txtHowManyMeals);
             this.Controls.Add(this.lblHowManyMeals);
-            this.Controls.Add(this.txtHowManyDays);
             this.Controls.Add(this.lblHowManyDays);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.btnCancel);
@@ -705,6 +712,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numServingsSnack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPersonsSupper)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numServingsSupper)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numGenerateDays)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numAlternateMeals)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -715,8 +724,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Label lblHowManyDays;
-        private System.Windows.Forms.TextBox txtHowManyDays;
-        private System.Windows.Forms.TextBox txtHowManyMeals;
         private System.Windows.Forms.Label lblHowManyMeals;
         private System.Windows.Forms.CheckBox chkBreakfast;
         private System.Windows.Forms.Label horizontalDivider;
@@ -750,5 +757,7 @@
         private System.Windows.Forms.DateTimePicker timeSupper;
         private System.Windows.Forms.CheckBox chkSupper;
         private System.Windows.Forms.CheckBox chkGenerateGroceryList;
+        private System.Windows.Forms.NumericUpDown numGenerateDays;
+        private System.Windows.Forms.NumericUpDown numAlternateMeals;
     }
 }
