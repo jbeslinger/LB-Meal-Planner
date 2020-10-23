@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
@@ -23,46 +24,46 @@ namespace LB_Meal_Planner
             rdr.Read();
 
             url = rdr.GetString(0);
-            numGenerateDays.Value = rdr.GetInt16(1);
-            numAlternateMeals.Value = rdr.GetInt16(2);
+            numGenerateDays.Value = (int)rdr.GetDecimal(1);
+            numAlternateMeals.Value = (int)rdr.GetDecimal(2);
             chkGenerateGroceryList.Checked = (rdr.GetInt16(3) == 1) ? true : false;
 
             int minutes, hours;
             chkBreakfast.Checked = (rdr.GetInt16(4) == 1) ? true : false;
             minutes = rdr.GetInt32(4 + 6); hours = minutes / 60; minutes %= 60;
             timeBreakfast.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsBreakfast.Value = rdr.GetInt16(4 + 12);
-            numServingsBreakfast.Value = rdr.GetInt16(4 + 18);
+            numPersonsBreakfast.Value = (int)rdr.GetDecimal(4 + 12);
+            numServingsBreakfast.Value = (int)rdr.GetDecimal(4 + 18);
 
             chkBrunch.Checked = (rdr.GetInt16(5) == 1) ? true : false;
             minutes = rdr.GetInt32(5 + 6); hours = minutes / 60; minutes %= 60;
             timeBrunch.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsBrunch.Value = rdr.GetInt16(5 + 12);
-            numServingsBrunch.Value = rdr.GetInt16(5 + 18);
+            numPersonsBrunch.Value = (int)rdr.GetDecimal(5 + 12);
+            numServingsBrunch.Value = (int)rdr.GetDecimal(5 + 18);
             
             chkLunch.Checked = (rdr.GetInt16(6) == 1) ? true : false;
             minutes = rdr.GetInt32(6 + 6); hours = minutes / 60; minutes %= 60;
             timeLunch.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsLunch.Value = rdr.GetInt16(6 + 12);
-            numServingsLunch.Value = rdr.GetInt16(6 + 18);
+            numPersonsLunch.Value = (int)rdr.GetDecimal(6 + 12);
+            numServingsLunch.Value = (int)rdr.GetDecimal(6 + 18);
 
             chkDinner.Checked = (rdr.GetInt16(7) == 1) ? true : false;
             minutes = rdr.GetInt32(7 + 6); hours = minutes / 60; minutes %= 60;
             timeDinner.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsDinner.Value = rdr.GetInt16(7 + 12);
-            numServingsDinner.Value = rdr.GetInt16(7 + 18);
+            numPersonsDinner.Value = (int)rdr.GetDecimal(7 + 12);
+            numServingsDinner.Value = (int)rdr.GetDecimal(7 + 18);
 
             chkSupper.Checked = (rdr.GetInt16(8) == 1) ? true : false;
             minutes = rdr.GetInt32(8 + 6); hours = minutes / 60; minutes %= 60;
             timeSupper.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsSupper.Value = rdr.GetInt16(8 + 12);
-            numServingsSupper.Value = rdr.GetInt16(8 + 18);
+            numPersonsSupper.Value = (int)rdr.GetDecimal(8 + 12);
+            numServingsSupper.Value = (int)rdr.GetDecimal(8 + 18);
 
             chkSnack.Checked = (rdr.GetInt16(9) == 1) ? true : false;
             minutes = rdr.GetInt32(9 + 6); hours = minutes / 60; minutes %= 60;
             timeSnack.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
-            numPersonsSnack.Value = rdr.GetInt16(9 + 12);
-            numServingsSnack.Value = rdr.GetInt16(9 + 18);
+            numPersonsSnack.Value = (int)rdr.GetDecimal(9 + 12);
+            numServingsSnack.Value = (int)rdr.GetDecimal(9 + 18);
         }
         #endregion
 
@@ -94,7 +95,45 @@ namespace LB_Meal_Planner
             }
             else
             {
-                // Generate Meals
+                int generateForDays = (int)numGenerateDays.Value;
+                int alternateMeals = (int)numAlternateMeals.Value;
+
+                List<Recipe>
+                    breakfastRecipes = new List<Recipe>(),
+                    brunchRecipes    = new List<Recipe>(),
+                    lunchRecipes     = new List<Recipe>(),
+                    dinnerRecipes    = new List<Recipe>(),
+                    supperRecipes    = new List<Recipe>(),
+                    snackRecipes     = new List<Recipe>();
+
+                if (chkBreakfast.Checked)
+                {
+
+                }
+                if (chkBrunch.Checked)
+                {
+
+                }
+                if (chkLunch.Checked)
+                {
+
+                }
+                if (chkDinner.Checked)
+                {
+
+                }
+                if (chkSupper.Checked)
+                {
+
+                }
+                if (chkSnack.Checked)
+                {
+
+                }
+                if (chkGenerateGroceryList.Checked)
+                {
+                    
+                }
             }
         }
 
@@ -108,39 +147,39 @@ namespace LB_Meal_Planner
             var cmd = new SQLiteCommand(con);
             
             cmd.CommandText = "UPDATE `userprefs` SET " +
-                "GenerateForDays = "                + numGenerateDays.Value                                         + ", " +
-                "NumberOfDiffMeals = "              + numAlternateMeals.Value                                       + ", " +
-                "GenerateGroceryList = "            + (chkGenerateGroceryList.Checked ? 1 : 0)                      + ", " +
-                
-                "BreakfastChk = "                   + (chkBreakfast.Checked ? 1 : 0)                                + ", " +
-                "BreakfastTime = "                  + (timeBreakfast.Value.Hour * 60 + timeBreakfast.Value.Minute)  + ", " +
-                "BreakfastPeople = "                + numPersonsBreakfast.Value                                     + ", " +
-                "BreakfastServingsPerPerson = "     + numServingsBreakfast.Value                                    + ", " +
-                
-                "BrunchChk = "                      + (chkBrunch.Checked ? 1 : 0)                                   + ", " +
-                "BrunchTime = "                     + (timeBrunch.Value.Hour * 60 + timeBrunch.Value.Minute)        + ", " +
-                "BrunchPeople = "                   + numPersonsBrunch.Value                                        + ", " +
-                "BrunchServingsPerPerson = "        + numServingsBrunch.Value                                       + ", " +
-                
-                "LunchChk = "                       + (chkLunch.Checked ? 1 : 0)                                    + ", " +
-                "LunchTime = "                      + (timeLunch.Value.Hour * 60 + timeLunch.Value.Minute)          + ", " +
-                "LunchPeople = "                    + numPersonsLunch.Value                                         + ", " +
-                "LunchServingsPerPerson = "         + numServingsLunch.Value                                        + ", " +
-
-                "DinnerChk = "                      + (chkDinner.Checked ? 1 : 0)                                   + ", " +
-                "DinnerTime = "                     + (timeDinner.Value.Hour * 60 + timeDinner.Value.Minute)        + ", " +
-                "DinnerPeople = "                   + numPersonsDinner.Value                                        + ", " +
-                "DinnerServingsPerPerson = "        + numServingsDinner.Value                                       + ", " +
-
-                "SupperChk = "                      + (chkSupper.Checked ? 1 : 0)                                   + ", " +
-                "SupperTime = "                     + (timeSupper.Value.Hour * 60 + timeSupper.Value.Minute)        + ", " +
-                "SupperPeople = "                   + numPersonsSupper.Value                                        + ", " +
-                "SupperServingsPerPerson = "        + numServingsSupper.Value                                       + ", " +
-
-                "SnackChk = "                       + (chkSnack.Checked ? 1 : 0)                                    + ", " +
-                "SnackTime = "                      + (timeSnack.Value.Hour * 60 + timeSnack.Value.Minute)          + ", " +
-                "SnackPeople = "                    + numPersonsSnack.Value                                         + ", " +
-                "SnackServingsPerPerson = "         + numServingsSnack.Value                                        + " " +
+                "GenerateForDays = "            + numGenerateDays.Value                                        + ", " +
+                "NumberOfDiffMeals = "          + numAlternateMeals.Value                                      + ", " +
+                "GenerateGroceryList = "        + (chkGenerateGroceryList.Checked ? 1 : 0)                     + ", " +
+                                                
+                "BreakfastChk = "               + (chkBreakfast.Checked ? 1 : 0)                               + ", " +
+                "BreakfastTime = "              + (timeBreakfast.Value.Hour * 60 + timeBreakfast.Value.Minute) + ", " +
+                "BreakfastPeople = "            + numPersonsBreakfast.Value                                    + ", " +
+                "BreakfastServingsPerPerson = " + numServingsBreakfast.Value                                   + ", " +
+                                                
+                "BrunchChk = "                  + (chkBrunch.Checked ? 1 : 0)                                  + ", " +
+                "BrunchTime = "                 + (timeBrunch.Value.Hour * 60 + timeBrunch.Value.Minute)       + ", " +
+                "BrunchPeople = "               + numPersonsBrunch.Value                                       + ", " +
+                "BrunchServingsPerPerson = "    + numServingsBrunch.Value                                      + ", " +
+                                                
+                "LunchChk = "                   + (chkLunch.Checked ? 1 : 0)                                   + ", " +
+                "LunchTime = "                  + (timeLunch.Value.Hour * 60 + timeLunch.Value.Minute)         + ", " +
+                "LunchPeople = "                + numPersonsLunch.Value                                        + ", " +
+                "LunchServingsPerPerson = "     + numServingsLunch.Value                                       + ", " +
+                                                
+                "DinnerChk = "                  + (chkDinner.Checked ? 1 : 0)                                  + ", " +
+                "DinnerTime = "                 + (timeDinner.Value.Hour * 60 + timeDinner.Value.Minute)       + ", " +
+                "DinnerPeople = "               + numPersonsDinner.Value                                       + ", " +
+                "DinnerServingsPerPerson = "    + numServingsDinner.Value                                      + ", " +
+                                                
+                "SupperChk = "                  + (chkSupper.Checked ? 1 : 0)                                  + ", " +
+                "SupperTime = "                 + (timeSupper.Value.Hour * 60 + timeSupper.Value.Minute)       + ", " +
+                "SupperPeople = "               + numPersonsSupper.Value                                       + ", " +
+                "SupperServingsPerPerson = "    + numServingsSupper.Value                                      + ", " +
+                                                
+                "SnackChk = "                   + (chkSnack.Checked ? 1 : 0)                                   + ", " +
+                "SnackTime = "                  + (timeSnack.Value.Hour * 60 + timeSnack.Value.Minute)         + ", " +
+                "SnackPeople = "                + numPersonsSnack.Value                                        + ", " +
+                "SnackServingsPerPerson = "     + numServingsSnack.Value                                       + " " +
 
                 "WHERE ROWID = 1;";
             
@@ -148,4 +187,33 @@ namespace LB_Meal_Planner
         }
         #endregion
     }
+}
+
+struct Recipe
+{
+    #region Enums
+    [Flags]
+    public enum RecipeType { BREAKFAST = 1, BRUNCH = 2, LUNCH = 4, DINNER = 8, SUPPER = 16, SNACK = 32 };
+    #endregion
+
+    #region Fields
+    public string Name, Ingredients, Directions;
+    public int CookTime, PrepTime, Servings;
+    public bool RequiresPrep;
+    public RecipeType type;
+    #endregion
+
+    #region Constructors
+    public Recipe(string name, string ingredients, string directions, int cookTime, int prepTime, int servings, bool requiresPrep, RecipeType type)
+    {
+        Name = name;
+        Ingredients = ingredients;
+        Directions = directions;
+        CookTime = cookTime;
+        PrepTime = prepTime;
+        Servings = servings;
+        RequiresPrep = requiresPrep;
+        this.type = type;
+    }
+    #endregion
 }

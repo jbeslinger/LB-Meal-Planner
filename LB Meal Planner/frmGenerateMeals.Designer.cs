@@ -633,6 +633,11 @@
             // numGenerateDays
             // 
             this.numGenerateDays.Location = new System.Drawing.Point(157, 11);
+            this.numGenerateDays.Maximum = new decimal(new int[] {
+            28,
+            0,
+            0,
+            0});
             this.numGenerateDays.Name = "numGenerateDays";
             this.numGenerateDays.Size = new System.Drawing.Size(67, 20);
             this.numGenerateDays.TabIndex = 31;
