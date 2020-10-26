@@ -175,7 +175,16 @@ namespace LB_Meal_Planner
                 // Meal Generation
                 if (chkBreakfast.Checked)
                 {
-                    
+                    Shuffle<Recipe>(breakfastRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = breakfastRecipes[m % alternateMeals];
+                        // This is where you would write the Google Calendar event and append the ingredients to a grocery list
+                        Console.WriteLine(String.Format("Eat {0} for breakfast on day {1}", r.Name, n + 1));
+                        ++m;
+                    }
                 }
                 if (chkBrunch.Checked)
                 {
@@ -266,7 +275,7 @@ struct Recipe
     #endregion
 
     #region Fields
-    public string Name, Ingredients, Directions;
+    public string Name, Ingredients, Directions; // ATTN: COME BACK LATER AND CHANGE THE INGREDIENTS FIELD TO A LIST OF INGREDIENT STRUCTS
     public int CookTime, PrepTime, Servings;
     public bool RequiresPrep;
     public RecipeType type;
