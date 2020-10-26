@@ -638,9 +638,19 @@
             0,
             0,
             0});
+            this.numGenerateDays.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numGenerateDays.Name = "numGenerateDays";
             this.numGenerateDays.Size = new System.Drawing.Size(67, 20);
             this.numGenerateDays.TabIndex = 31;
+            this.numGenerateDays.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numAlternateMeals
             // 
@@ -650,9 +660,19 @@
             0,
             0,
             0});
+            this.numAlternateMeals.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numAlternateMeals.Name = "numAlternateMeals";
             this.numAlternateMeals.Size = new System.Drawing.Size(67, 20);
             this.numAlternateMeals.TabIndex = 32;
+            this.numAlternateMeals.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // frmGenerateMeals
             // 
