@@ -67,6 +67,22 @@ namespace LB_Meal_Planner
         }
         #endregion
 
+        #region Methods
+        private void Shuffle<T>(List<T> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+        #endregion
+
         #region Events
         private void chkBreakfast_CheckedChanged(object sender, EventArgs e)
         { bool v = chkBreakfast.Checked; timeBreakfast.Enabled = v; numPersonsBreakfast.Enabled = v; numServingsBreakfast.Enabled = v; }
@@ -159,7 +175,7 @@ namespace LB_Meal_Planner
                 // Meal Generation
                 if (chkBreakfast.Checked)
                 {
-
+                    
                 }
                 if (chkBrunch.Checked)
                 {
@@ -181,6 +197,8 @@ namespace LB_Meal_Planner
                 {
 
                 }
+
+                // Grocery list generation
                 if (chkGenerateGroceryList.Checked)
                 {
                     
@@ -267,4 +285,10 @@ struct Recipe
         this.type = type;
     }
     #endregion
+}
+
+struct Ingredient
+{
+    public string Name, Measurement;
+    public double Amount;
 }
