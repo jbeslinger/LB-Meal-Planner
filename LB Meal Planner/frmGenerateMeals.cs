@@ -106,6 +106,57 @@ namespace LB_Meal_Planner
                     supperRecipes    = new List<Recipe>(),
                     snackRecipes     = new List<Recipe>();
 
+                // Filling the Recipe lists with Recipe structs
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "SELECT * FROM `recipes` WHERE PickMe = 1";
+                var rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Recipe r = new Recipe(
+                        rdr.GetString(0), rdr.GetString(7), rdr.GetString(8),
+                        rdr.GetInt32(3), rdr.GetInt32(5), rdr.GetInt16(6),
+                        (rdr.GetInt16(4) == 1 ? true : false), (Recipe.RecipeType)rdr.GetInt32(1));
+                    if (r.type.HasFlag(Recipe.RecipeType.BREAKFAST))
+                        breakfastRecipes.Add(r);
+                    if (r.type.HasFlag(Recipe.RecipeType.BRUNCH))
+                        brunchRecipes.Add(r);
+                    if (r.type.HasFlag(Recipe.RecipeType.LUNCH))
+                        lunchRecipes.Add(r);
+                    if (r.type.HasFlag(Recipe.RecipeType.DINNER))
+                        dinnerRecipes.Add(r);
+                    if (r.type.HasFlag(Recipe.RecipeType.SUPPER))
+                        supperRecipes.Add(r);
+                    if (r.type.HasFlag(Recipe.RecipeType.SNACK))
+                        snackRecipes.Add(r);
+                }
+
+                // Error Checking
+                if ((chkBreakfast.Checked  &&  breakfastRecipes.Count == 0) ||
+                    (chkBrunch.Checked     &&  brunchRecipes.Count == 0   ) ||
+                    (chkLunch.Checked      &&  lunchRecipes.Count == 0    ) ||
+                    (chkDinner.Checked     &&  dinnerRecipes.Count == 0   ) ||
+                    (chkSupper.Checked     &&  supperRecipes.Count == 0   ) ||
+                    (chkSnack.Checked      &&  snackRecipes.Count == 0    ))
+                {
+                    MessageBox.Show("You don't have enough types of recipes to generate the meals you requested." +
+                        "Go back and make sure you have enough types of recipes.",
+                        "Not Enough Types of Meals", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if ((chkBreakfast.Checked  &&  (alternateMeals > breakfastRecipes.Count)) ||
+                    (chkBrunch.Checked     &&  (alternateMeals > brunchRecipes.Count   )) ||
+                    (chkLunch.Checked      &&  (alternateMeals > lunchRecipes.Count    )) ||
+                    (chkDinner.Checked     &&  (alternateMeals > dinnerRecipes.Count   )) ||
+                    (chkSupper.Checked     &&  (alternateMeals > supperRecipes.Count   )) ||
+                    (chkSnack.Checked      &&  (alternateMeals > snackRecipes.Count    )))
+                {
+                    MessageBox.Show("There aren't enough meals per category to cover " + alternateMeals + " different alternating meals. " +
+                        "Go back and make some more meals for each category you would like to generate or lower your amount of different meals to generate.",
+                        "Not Enough Meals to Alternate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Meal Generation
                 if (chkBreakfast.Checked)
                 {
 
