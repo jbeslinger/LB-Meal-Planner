@@ -26,7 +26,7 @@ namespace LB_Meal_Planner
 
             if (InitializeCredentials() + InitializeDatabase() > 0)
                 return;
-            
+
             Application.Run(new frmMain());
         }
         #endregion

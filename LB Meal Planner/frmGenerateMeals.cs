@@ -289,6 +289,26 @@ struct Recipe
 
 struct Ingredient
 {
+    #region Fields
     public string Name, Measurement;
     public double Amount;
+    #endregion
+
+    #region Constructors
+    public Ingredient(string amount, string measurement, string name)
+    {
+        Name = name;
+        Measurement = measurement;
+        Amount = 0;
+    }
+    #endregion
+
+    #region Methods
+    private double ParseDouble(string s)
+    {
+        double d = 0;
+
+        return d;
+    }
+    #endregion
 }
