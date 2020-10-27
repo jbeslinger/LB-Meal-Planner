@@ -100,7 +100,7 @@ namespace LB_Meal_Planner
 
             var cmd = new SQLiteCommand(con);
             cmd.CommandText = "UPDATE `recipes` " +
-                "SET RecipeName = '" + txtRecipeName.Text + "', " +
+                "SET RecipeName = '" + txtRecipeName.Text.Replace("'", @"''") + "', " +
                 "RecipeType = " + recipeType + ", " +
                 "PickMe = " + (chkPickMeForGen.Checked ? 1 : 0) + ", " +
                 "CookTime = " + ((numCookHours.Value * 60) + numCookMinutes.Value) + ", " +
