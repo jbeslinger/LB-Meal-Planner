@@ -191,12 +191,12 @@ namespace LB_Meal_Planner
                         Recipe r = breakfastRecipes[m % alternateMeals];
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Breakfast";
-                        gEvent.Description += "<ol>";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
                         foreach (string s in r.Directions.Split('\n'))
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
                             timeBreakfast.Value.Hour, timeBreakfast.Value.Minute, 0);
                         start.DateTime = d;
                         gEvent.Start = start;
@@ -222,23 +222,198 @@ namespace LB_Meal_Planner
                 }
                 if (chkBrunch.Checked)
                 {
-
+                    Shuffle<Recipe>(brunchRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = brunchRecipes[m % alternateMeals];
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Brunch";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                            timeBrunch.Value.Hour, timeBrunch.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
+                        ++m;
+                    }
                 }
                 if (chkLunch.Checked)
                 {
-
+                    Shuffle<Recipe>(lunchRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = lunchRecipes[m % alternateMeals];
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Lunch";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                            timeLunch.Value.Hour, timeLunch.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
+                        ++m;
+                    }
                 }
                 if (chkDinner.Checked)
                 {
-
+                    Shuffle<Recipe>(dinnerRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = dinnerRecipes[m % alternateMeals];
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Dinner";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                            timeDinner.Value.Hour, timeDinner.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
+                        ++m;
+                    }
                 }
                 if (chkSupper.Checked)
                 {
-
+                    Shuffle<Recipe>(supperRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = supperRecipes[m % alternateMeals];
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Supper";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                            timeSupper.Value.Hour, timeSupper.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
+                        ++m;
+                    }
                 }
                 if (chkSnack.Checked)
                 {
-
+                    Shuffle<Recipe>(snackRecipes);
+                    int m = alternateMeals;
+                    for (int n = 0; n < generateForDays; n++)
+                    {
+                        // Alternate through recipes in a linear pattern
+                        Recipe r = snackRecipes[m % alternateMeals];
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Snack";
+                        gEvent.Description += "DIRECTIONS:\n<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                            timeSnack.Value.Hour, timeSnack.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
+                        ++m;
+                    }
                 }
 
                 // Grocery list generation
@@ -246,6 +421,9 @@ namespace LB_Meal_Planner
                 {
                     
                 }
+
+                MessageBox.Show("Generated meal plan successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                this.Close();
             }
         }
 
