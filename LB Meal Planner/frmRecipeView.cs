@@ -108,7 +108,7 @@ namespace LB_Meal_Planner
                 "PrepTime = " + ((numPrepHours.Value * 60) + numPrepMinutes.Value) + ", " +
                 "Servings = " + numServings.Value + ", " +
                 "Ingredients = '" + ingredientsList + "', " +
-                "Directions = '" + txtDirections.Text + "' " +
+                "Directions = '" + txtDirections.Text.Replace("'", @"''") + "' " +
                 "WHERE ROWID = " + recipeID;
             cmd.ExecuteNonQuery();
 
