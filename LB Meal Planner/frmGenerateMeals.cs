@@ -528,12 +528,12 @@ struct Ingredient
         Name = name;
         Measurement = measurement;
         Amount = 0;
-        Amount = ParseDouble(amount);
+        Amount = ParseMixedFraction(amount);
     }
     #endregion
 
     #region Methods
-    private double ParseDouble(string s)
+    private double ParseMixedFraction(string s)
     {
         double d = 0;
         double wholeNumber, numerator, denominator;
