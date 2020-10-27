@@ -487,23 +487,30 @@ struct Recipe
     #endregion
 
     #region Fields
-    public string Name, Ingredients, Directions; // ATTN: COME BACK LATER AND CHANGE THE INGREDIENTS FIELD TO A LIST OF INGREDIENT STRUCTS
+    public string Name, Directions;
     public int CookTime, PrepTime, Servings;
     public bool RequiresPrep;
     public RecipeType Type;
+    public List<Ingredient> Ingredients;
     #endregion
 
     #region Constructors
     public Recipe(string name, string ingredients, string directions, int cookTime, int prepTime, int servings, bool requiresPrep, RecipeType type)
     {
         Name = name;
-        Ingredients = ingredients;
         Directions = directions;
         CookTime = cookTime;
         PrepTime = prepTime;
         Servings = servings;
         RequiresPrep = requiresPrep;
         Type = type;
+
+        Ingredients = new List<Ingredient>();
+        foreach (string n in ingredients.Split(','))
+        {
+            string[] s = n.Split(';');
+            Ingredients.Add(new Ingredient(s[0], s[1], s[2]));
+        }
     }
     #endregion
 }
@@ -521,6 +528,7 @@ struct Ingredient
         Name = name;
         Measurement = measurement;
         Amount = 0;
+        Amount = ParseDouble(amount);
     }
     #endregion
 
@@ -528,6 +536,24 @@ struct Ingredient
     private double ParseDouble(string s)
     {
         double d = 0;
+        double wholeNumber, numerator, denominator;
+        
+        if (s.Contains(" ") || s.Contains("/"))
+        {
+            string[] n = s.Split(' ');
+            if (n.Length > 1)
+            {
+                wholeNumber = double.Parse(n[0]);
+                n = n[1].Split('/');
+                numerator = double.Parse(n[0]);
+                denominator = double.Parse(n[1]);
+                d = wholeNumber + (numerator / denominator);
+            }
+        }
+        else if (s.Contains("."))
+        {
+            d = double.Parse(s);
+        }
 
         return d;
     }
