@@ -13,6 +13,8 @@ namespace LB_Meal_Planner
     static class Program
     {
         #region Static Fields
+        public static CalendarService service; // Program-wide calendar service
+
         static string[] Scopes = { CalendarService.Scope.CalendarEvents };
         static string ApplicationName = "LB Meal Planner";
         #endregion
@@ -54,7 +56,7 @@ namespace LB_Meal_Planner
                 }
 
                 // Create Google Calendar API service.
-                var service = new CalendarService(new BaseClientService.Initializer()
+                Program.service = new CalendarService(new BaseClientService.Initializer()
                 {
                     HttpClientInitializer = credential,
                     ApplicationName = ApplicationName,

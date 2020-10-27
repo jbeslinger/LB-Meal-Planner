@@ -12,7 +12,7 @@ namespace LB_Meal_Planner
         SQLiteConnection con;
         frmMain parentForm;
 
-        Regex regex = new Regex(@"^https:\/\/calendar\.google\.com\/calendar\/ical\/*", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        Regex regex = new Regex(@"\@group\.calendar\.google\.com&*", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
         #region Constructors

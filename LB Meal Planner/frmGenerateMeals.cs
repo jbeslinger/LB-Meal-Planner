@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Apis.Calendar.v3.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -132,17 +133,17 @@ namespace LB_Meal_Planner
                         rdr.GetString(0), rdr.GetString(7), rdr.GetString(8),
                         rdr.GetInt32(3), rdr.GetInt32(5), rdr.GetInt16(6),
                         (rdr.GetInt16(4) == 1 ? true : false), (Recipe.RecipeType)rdr.GetInt32(1));
-                    if (r.type.HasFlag(Recipe.RecipeType.BREAKFAST))
+                    if (r.Type.HasFlag(Recipe.RecipeType.BREAKFAST))
                         breakfastRecipes.Add(r);
-                    if (r.type.HasFlag(Recipe.RecipeType.BRUNCH))
+                    if (r.Type.HasFlag(Recipe.RecipeType.BRUNCH))
                         brunchRecipes.Add(r);
-                    if (r.type.HasFlag(Recipe.RecipeType.LUNCH))
+                    if (r.Type.HasFlag(Recipe.RecipeType.LUNCH))
                         lunchRecipes.Add(r);
-                    if (r.type.HasFlag(Recipe.RecipeType.DINNER))
+                    if (r.Type.HasFlag(Recipe.RecipeType.DINNER))
                         dinnerRecipes.Add(r);
-                    if (r.type.HasFlag(Recipe.RecipeType.SUPPER))
+                    if (r.Type.HasFlag(Recipe.RecipeType.SUPPER))
                         supperRecipes.Add(r);
-                    if (r.type.HasFlag(Recipe.RecipeType.SNACK))
+                    if (r.Type.HasFlag(Recipe.RecipeType.SNACK))
                         snackRecipes.Add(r);
                 }
 
@@ -172,7 +173,14 @@ namespace LB_Meal_Planner
                     return;
                 }
 
-                // Meal Generation
+                // Get calendar address
+                cmd = new SQLiteCommand(con);
+                cmd.CommandText = "SELECT CalendarURL FROM `userprefs` WHERE ROWID = 1";
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                string url = rdr.GetString(0);
+
+                // Meal & Calendar Generation
                 if (chkBreakfast.Checked)
                 {
                     Shuffle<Recipe>(breakfastRecipes);
@@ -181,8 +189,34 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = breakfastRecipes[m % alternateMeals];
-                        // This is where you would write the Google Calendar event and append the ingredients to a grocery list
-                        Console.WriteLine(String.Format("Eat {0} for breakfast on day {1}", r.Name, n + 1));
+                        Event gEvent = new Event();
+                        gEvent.Summary = r.Name + " - Breakfast";
+                        gEvent.Description += "<ol>";
+                        foreach (string s in r.Directions.Split('\n'))
+                            gEvent.Description += "<li>" + s + "</li>";
+                        gEvent.Description += "</ol>";
+                        EventDateTime start = new EventDateTime();
+                        DateTime d = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + n,
+                            timeBreakfast.Value.Hour, timeBreakfast.Value.Minute, 0);
+                        start.DateTime = d;
+                        gEvent.Start = start;
+                        EventDateTime end = new EventDateTime();
+                        d = d.AddHours((double)((int)r.CookTime / 60));
+                        d = d.AddMinutes((double)((int)r.CookTime % 60));
+                        end.DateTime = d;
+                        gEvent.End = end;
+                        if (r.RequiresPrep)
+                        {
+                            EventReminder er = new EventReminder();
+                            er.Method = "popup";
+                            er.Minutes = r.PrepTime;
+                            EventReminder[] reminderOverrides = new EventReminder[] { er };
+                            Event.RemindersData remindersData = new Event.RemindersData();
+                            remindersData.UseDefault = false;
+                            remindersData.Overrides = reminderOverrides;
+                            gEvent.Reminders = remindersData;
+                        }
+                        Program.service.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -278,7 +312,7 @@ struct Recipe
     public string Name, Ingredients, Directions; // ATTN: COME BACK LATER AND CHANGE THE INGREDIENTS FIELD TO A LIST OF INGREDIENT STRUCTS
     public int CookTime, PrepTime, Servings;
     public bool RequiresPrep;
-    public RecipeType type;
+    public RecipeType Type;
     #endregion
 
     #region Constructors
@@ -291,7 +325,7 @@ struct Recipe
         PrepTime = prepTime;
         Servings = servings;
         RequiresPrep = requiresPrep;
-        this.type = type;
+        Type = type;
     }
     #endregion
 }
