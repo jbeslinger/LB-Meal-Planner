@@ -1,7 +1,9 @@
 ﻿using Google.Apis.Calendar.v3.Data;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Design.PluralizationServices;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace LB_Meal_Planner
@@ -518,7 +520,7 @@ struct Recipe
 struct Ingredient
 {
     #region Fields
-    public string Name, Measurement;
+    public string Name, Measurement; // Singularized English strings
     public double Amount;
     #endregion
 
@@ -529,6 +531,13 @@ struct Ingredient
         Measurement = measurement;
         Amount = 0;
         Amount = ParseMixedFraction(amount);
+
+        // Remove plurality
+        var ps = PluralizationService.CreateService(new CultureInfo("en-US"));
+        if (ps.IsPlural(measurement))
+            measurement = ps.Singularize(measurement);
+        if (ps.IsPlural(name))
+            name = ps.Singularize(name);
     }
     #endregion
 
@@ -536,7 +545,7 @@ struct Ingredient
     private double ParseMixedFraction(string s)
     {
         double d = 0;
-        double wholeNumber, numerator, denominator;
+        double wholeNumber = 0, numerator, denominator;
         
         if (s.Contains(" ") || s.Contains("/"))
         {
@@ -545,6 +554,13 @@ struct Ingredient
             {
                 wholeNumber = double.Parse(n[0]);
                 n = n[1].Split('/');
+                numerator = double.Parse(n[0]);
+                denominator = double.Parse(n[1]);
+                d = wholeNumber + (numerator / denominator);
+            }
+            else
+            {
+                n = s.Split('/');
                 numerator = double.Parse(n[0]);
                 denominator = double.Parse(n[1]);
                 d = wholeNumber + (numerator / denominator);
