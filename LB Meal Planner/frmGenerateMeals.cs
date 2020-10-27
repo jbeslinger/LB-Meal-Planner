@@ -117,6 +117,8 @@ namespace LB_Meal_Planner
                 int generateForDays = (int)numGenerateDays.Value;
                 int alternateMeals = (int)numAlternateMeals.Value;
 
+                GroceryList groceryList = new GroceryList();
+
                 List<Recipe>
                     breakfastRecipes = new List<Recipe>(),
                     brunchRecipes    = new List<Recipe>(),
@@ -191,6 +193,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = breakfastRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Breakfast";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -218,7 +222,9 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
                         ++m;
                     }
                 }
@@ -257,7 +263,9 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
                         ++m;
                     }
                 }
@@ -296,7 +304,9 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
                         ++m;
                     }
                 }
@@ -335,7 +345,10 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
+                        
                         ++m;
                     }
                 }
@@ -374,7 +387,9 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
                         ++m;
                     }
                 }
@@ -413,7 +428,9 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
+#if RELEASE
                         Program.service.Events.Insert(gEvent, url).Execute();
+#endif
                         ++m;
                     }
                 }
@@ -421,7 +438,7 @@ namespace LB_Meal_Planner
                 // Grocery list generation
                 if (chkGenerateGroceryList.Checked)
                 {
-                    
+                    Console.Write(groceryList.ToString());
                 }
 
                 MessageBox.Show("Generated meal plan successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -477,26 +494,77 @@ namespace LB_Meal_Planner
             
             cmd.ExecuteNonQuery();
         }
-        #endregion
+#endregion
     }
 }
 
-struct Recipe
+class GroceryList
 {
-    #region Enums
+#region Fields
+    private List<Ingredient> ls;
+#endregion
+
+#region Constructors
+    public GroceryList()
+    {
+        ls = new List<Ingredient>();
+    }
+#endregion
+
+#region Methods
+    public void AddIngredient(Ingredient proposedIngredient)
+    {
+        bool contains = false;
+        int indexOf = 0;
+        foreach (Ingredient n in ls)
+        {
+            if (n.Name == proposedIngredient.Name)
+            {
+                contains = true;
+                break;
+            }
+        }
+
+        if (contains)
+        {
+            ls[indexOf] += proposedIngredient;
+        }
+        else
+        {
+            ls.Add(proposedIngredient);
+        }
+    }
+#endregion
+
+#region Overrides
+    public override string ToString()
+    {
+        string final = "GROCERY LIST :\n";
+        foreach (Ingredient n in ls)
+        {
+            final += String.Format("• {0} {1} {2}\n", n.Amount, n.Measurement, n.Name);
+        }
+        return final;
+    }
+#endregion
+}
+
+class Recipe
+{
+#region Enums
     [Flags]
     public enum RecipeType { BREAKFAST = 1, BRUNCH = 2, LUNCH = 4, DINNER = 8, SUPPER = 16, SNACK = 32 };
-    #endregion
+#endregion
 
-    #region Fields
+#region Fields
     public string Name, Directions;
     public int CookTime, PrepTime, Servings;
     public bool RequiresPrep;
     public RecipeType Type;
     public List<Ingredient> Ingredients;
-    #endregion
+#endregion
 
-    #region Constructors
+#region Constructors
     public Recipe(string name, string ingredients, string directions, int cookTime, int prepTime, int servings, bool requiresPrep, RecipeType type)
     {
         Name = name;
@@ -508,40 +576,74 @@ struct Recipe
         Type = type;
 
         Ingredients = new List<Ingredient>();
-        foreach (string n in ingredients.Split(','))
+        if (ingredients != "")
         {
-            string[] s = n.Split(';');
-            Ingredients.Add(new Ingredient(s[0], s[1], s[2]));
+            foreach (string n in ingredients.Split(','))
+            {
+                string[] s = n.Split(';');
+                Ingredients.Add(new Ingredient(s[0], s[1], s[2]));
+            }
         }
     }
-    #endregion
+#endregion
 }
 
-struct Ingredient
+class Ingredient
 {
-    #region Fields
-    public string Name, Measurement; // Singularized English strings
-    public double Amount;
-    #endregion
+#region Members
+    private string m_Name, m_Measurement; // Singularized English strings
+#endregion
 
-    #region Constructors
+#region Properties
+    public double Amount;
+    public string Name
+    {
+        get
+        {
+            if (Amount > 1)
+                return PluralizationService.CreateService(new CultureInfo("en-US")).Pluralize(m_Name);
+            else
+                return m_Name;
+        }
+        set
+        {
+            m_Name = PluralizationService.CreateService(new CultureInfo("en-US")).Singularize(value);
+        }
+    }
+    public string Measurement
+    {
+        get
+        {
+            if (Amount > 1)
+                return PluralizationService.CreateService(new CultureInfo("en-US")).Pluralize(m_Measurement);
+            else
+                return m_Measurement;
+        }
+        set
+        {
+            m_Measurement = PluralizationService.CreateService(new CultureInfo("en-US")).Singularize(value);
+        }
+    }
+#endregion
+
+#region Constructors
     public Ingredient(string amount, string measurement, string name)
     {
         Name = name;
         Measurement = measurement;
         Amount = 0;
         Amount = ParseMixedFraction(amount);
-
-        // Remove plurality
-        var ps = PluralizationService.CreateService(new CultureInfo("en-US"));
-        if (ps.IsPlural(measurement))
-            measurement = ps.Singularize(measurement);
-        if (ps.IsPlural(name))
-            name = ps.Singularize(name);
     }
-    #endregion
 
-    #region Methods
+    public Ingredient(double amount, string measurement, string name)
+    {
+        Amount = amount;
+        Measurement = measurement;
+        Name = name;
+    }
+#endregion
+
+#region Methods
     private double ParseMixedFraction(string s)
     {
         double d = 0;
@@ -573,5 +675,12 @@ struct Ingredient
 
         return d;
     }
-    #endregion
+#endregion
+
+#region Overrides
+    public static Ingredient operator +(Ingredient a, Ingredient b)
+    {
+        return new Ingredient(a.Amount + b.Amount, a.Measurement, a.Name);
+    }
+#endregion
 }
