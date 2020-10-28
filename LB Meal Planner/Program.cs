@@ -3,6 +3,7 @@ using Google.Apis.Calendar.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
+using System.Data.Entity.Design.PluralizationServices;
 using System.Data.SQLite;
 using System.IO;
 using System.Threading;

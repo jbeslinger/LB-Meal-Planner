@@ -202,8 +202,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeBreakfast.Value.Hour, timeBreakfast.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -245,8 +246,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeBrunch.Value.Hour, timeBrunch.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -288,8 +290,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeLunch.Value.Hour, timeLunch.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -331,8 +334,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeDinner.Value.Hour, timeDinner.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -375,8 +379,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeSupper.Value.Hour, timeSupper.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -418,8 +423,9 @@ namespace LB_Meal_Planner
                             gEvent.Description += "<li>" + s + "</li>";
                         gEvent.Description += "</ol>";
                         EventDateTime start = new EventDateTime();
-                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day + n,
+                        DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeSnack.Value.Hour, timeSnack.Value.Minute, 0);
+                        d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
