@@ -236,6 +236,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = brunchRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing * (double)numServingsBrunch.Value * (double)numPersonsBrunch.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Brunch";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -277,6 +279,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = lunchRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing * (double)numServingsLunch.Value * (double)numPersonsLunch.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Lunch";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -318,6 +322,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = dinnerRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing * (double)numServingsDinner.Value * (double)numPersonsDinner.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Dinner";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -360,6 +366,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = supperRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing * (double)numServingsSupper.Value * (double)numPersonsSupper.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Supper";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -401,6 +409,8 @@ namespace LB_Meal_Planner
                     {
                         // Alternate through recipes in a linear pattern
                         Recipe r = snackRecipes[m % alternateMeals];
+                        foreach (Ingredient ing in r.Ingredients)
+                            groceryList.AddIngredient(ing * (double)numServingsSnack.Value * (double)numPersonsSnack.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Snack";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -541,9 +551,13 @@ class GroceryList
     public override string ToString()
     {
         string final = "GROCERY LIST :\n";
+        var ps = PluralizationService.CreateService(new CultureInfo("en-US"));
         foreach (Ingredient n in ls)
         {
-            final += String.Format("• {0} {1} {2}\n", n.AmountPerServing, n.Measurement, n.Name);
+            final += String.Format("• {0} {1} {2}\n",
+                n.AmountPerServing,
+                (n.AmountPerServing > 1 ? ps.Pluralize(n.Measurement) : n.Measurement),
+                (n.AmountPerServing > 1 ? ps.Pluralize(n.Name) : n.Name));
         }
         return final;
     }
@@ -601,10 +615,7 @@ class Ingredient
     {
         get
         {
-            if (AmountPerServing > 1)
-                return PluralizationService.CreateService(new CultureInfo("en-US")).Pluralize(m_Name);
-            else
-                return m_Name;
+            return m_Name;
         }
         set
         {
