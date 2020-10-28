@@ -229,11 +229,29 @@ namespace LB_Meal_Planner
             EditRecipe();
         }
 
+        private void aZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.sortMode = SortMode.ASCENDING;
+            PopulateListbox();
+        }
+
+        private void zAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.sortMode = SortMode.DESCENDING;
+            PopulateListbox();
+        }
+
+        private void noSortingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.sortMode = SortMode.NONE;
+            PopulateListbox();
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
             con.Close();
         }
-        #endregion        
+        #endregion
     }
 }

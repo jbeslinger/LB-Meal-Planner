@@ -163,10 +163,10 @@
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEGSURBVDhPlVG7DcJADL0FWIOakjp1CkZAHBswAqQNKaFk
-        ARAldOyCICgFFymf8sizzsgBLsCTXmwrfi+2o4qiGFRVZUDksm5ov1E1D3OaTS2I3FzO+T4ccm2DIPCS
-        DPLb1UKw6fdIxDmiNAjD0Jp7TrFlUNf1WJqwGJNIgzhe2vVqbefzRdsAO/PYbMDrSIPD4Uhxu921DaQY
-        kXN5Az3RND4T9ZsBiJzXkQb4Ku+OyFOQAa8AIuebNC9bK3wiGQD8/6loUJblCDUavtFJ/PgkYrqWbqDR
-        N76c2gv5xSRJSKy1/t3A3cJEUfQUp2lKB3ct3XgVZ1n2nMi1dAONvLfkXwY+KqXUAyhMLz1qCcqeAAAA
+        ARAldMwCCkIpuEj5lEeedUYOcAGe9GJb8XuxHVUUxaCqKgMil3VD+42qeZjTbGpB5OZyzvfhkGsbBIGX
+        ZJDfrhaCTb9HIs4RpUEYhtbcc4otg7qux9KExZhEGsTx0q5XazufL9oG2JnHZgNeRxocDkeK2+2ubSDF
+        iJzLG+iJpvGZqN8MQOS8jjTAV3l3RJ6CDHgFEDnfpHnZWuETyQDg/09Fg7IsR6jR8I1O4scnEdO1dAON
+        vvHl1F7ILyZJQmKt9e8G7hYmiqKnOE1TOrhr6carOMuy50SupRto5L0l/zLwUSmlHuCiLx/ChxxOAAAA
         AElFTkSuQmCC
 </value>
   </data>
@@ -195,12 +195,12 @@
   <data name="tbtnSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAElSURBVDhPrZPLbYVADEXZpYI0kFIoALGmCERB7EAUQAdA
-        Ca8L2CE+UhY4cyZ4ZN5HT4piyZrBc21fX2Yia8dxfLDu+/61bZtYJ2YxDzbP86cD3tZ1Ld2a9X0vcRx7
-        H4aBItl5dgN7pv2aJtd1LW3byjiO303ThALsiXEG5lIESpqsCUVRSJqm4TtJEsnzPHxrkTAO1KiugHcO
-        lhyffAqWQdF2wemM2xjswJLjhXUb6bpOqqq6gMuypIt39hpnNDRB2GVZxBfQQ3UKkcgZzv6eCT5N0z8V
-        gA60rPKvRqAQ4zK2H8GKiEAKVPB9Z4S+iIi5Ln//jc8uEl1sZ0az7B4u0rOrzJw2gRhnmvzyPUDNrRki
-        aYG3j0lNKZ3Cht+Iq2CBtrco+gEmEVhD0w/PtAAAAABJRU5ErkJggg==
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEmSURBVDhPrZPLbYVADEXZpYI0kFIoALGmCERB7EAUQAdA
+        Ca8JJHaIj5QFzpwJHpn30ZOiWLJm8Fzb15eZyNpxHB+s+75/bdsm1olZzIPN8/zpgLd1XUu3Zn3fSxzH
+        3odhoEh2nt3Anmm/psl1XUvbtjKO43fTNKEAe2KcgbkUgZIma0JRFJKmafhOkkTyPA/fWiSMAzWqK+Cd
+        gyXHJ5+CZVC0XXA64zYGO7DkeGHdRrquk6qqLuCyLOninb3GGQ1NEHZZFvEF9FCdQiRyhrO/Z4JP0/RP
+        BaADLav8qxEoxLiM7UewIiKQAhV83xmhLyJirsvff+Ozi0QX25nRLLuHi/TsKjOnTSDGmSa/fA9Qc2uG
+        SFrg7WNSU0qnsOE34ipYoO0tin4AxGpYE2EpTfoAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="tbtnHelp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
