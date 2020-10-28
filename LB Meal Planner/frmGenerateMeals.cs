@@ -521,6 +521,7 @@ class GroceryList
             if (n.Name == proposedIngredient.Name)
             {
                 contains = true;
+                indexOf = ls.IndexOf(n);
                 break;
             }
         }
@@ -631,7 +632,6 @@ class Ingredient
     {
         Name = name;
         Measurement = measurement;
-        Amount = 0;
         Amount = ParseMixedFraction(amount);
     }
 
@@ -668,7 +668,7 @@ class Ingredient
                 d = wholeNumber + (numerator / denominator);
             }
         }
-        else if (s.Contains("."))
+        else
         {
             d = double.Parse(s);
         }
