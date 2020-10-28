@@ -194,7 +194,7 @@ namespace LB_Meal_Planner
                         // Alternate through recipes in a linear pattern
                         Recipe r = breakfastRecipes[m % alternateMeals];
                         foreach (Ingredient ing in r.Ingredients)
-                            groceryList.AddIngredient(ing);
+                            groceryList.AddIngredient(ing * (double)numServingsBreakfast.Value * (double)numPersonsBreakfast.Value);
                         Event gEvent = new Event();
                         gEvent.Summary = r.Name + " - Breakfast";
                         gEvent.Description += "DIRECTIONS:\n<ol>";
@@ -543,7 +543,7 @@ class GroceryList
         string final = "GROCERY LIST :\n";
         foreach (Ingredient n in ls)
         {
-            final += String.Format("• {0} {1} {2}\n", n.Amount, n.Measurement, n.Name);
+            final += String.Format("• {0} {1} {2}\n", n.AmountPerServing, n.Measurement, n.Name);
         }
         return final;
     }
@@ -559,20 +559,20 @@ class Recipe
 
 #region Fields
     public string Name, Directions;
-    public int CookTime, PrepTime, Servings;
+    public int CookTime, PrepTime, MakesServings;
     public bool RequiresPrep;
     public RecipeType Type;
     public List<Ingredient> Ingredients;
 #endregion
 
 #region Constructors
-    public Recipe(string name, string ingredients, string directions, int cookTime, int prepTime, int servings, bool requiresPrep, RecipeType type)
+    public Recipe(string name, string ingredients, string directions, int cookTime, int prepTime, int makesServings, bool requiresPrep, RecipeType type)
     {
         Name = name;
         Directions = directions;
         CookTime = cookTime;
         PrepTime = prepTime;
-        Servings = servings;
+        MakesServings = makesServings;
         RequiresPrep = requiresPrep;
         Type = type;
 
@@ -582,7 +582,7 @@ class Recipe
             foreach (string n in ingredients.Split(','))
             {
                 string[] s = n.Split(';');
-                Ingredients.Add(new Ingredient(s[0], s[1], s[2]));
+                Ingredients.Add(new Ingredient(s[0], s[1], s[2], MakesServings));
             }
         }
     }
@@ -596,12 +596,12 @@ class Ingredient
 #endregion
 
 #region Properties
-    public double Amount;
+    public double AmountPerServing;
     public string Name
     {
         get
         {
-            if (Amount > 1)
+            if (AmountPerServing > 1)
                 return PluralizationService.CreateService(new CultureInfo("en-US")).Pluralize(m_Name);
             else
                 return m_Name;
@@ -615,7 +615,7 @@ class Ingredient
     {
         get
         {
-            if (Amount > 1)
+            if (AmountPerServing > 1)
                 return PluralizationService.CreateService(new CultureInfo("en-US")).Pluralize(m_Measurement);
             else
                 return m_Measurement;
@@ -628,22 +628,22 @@ class Ingredient
 #endregion
 
 #region Constructors
-    public Ingredient(string amount, string measurement, string name)
+    public Ingredient(string amount, string measurement, string name, int servingsMultiplier)
     {
         Name = name;
         Measurement = measurement;
-        Amount = ParseMixedFraction(amount);
+        AmountPerServing = ParseMixedFraction(amount) / (double)servingsMultiplier;
     }
 
-    public Ingredient(double amount, string measurement, string name)
+    public Ingredient(double amount, string measurement, string name, int servingsMultiplier)
     {
-        Amount = amount;
+        AmountPerServing = amount / servingsMultiplier;
         Measurement = measurement;
         Name = name;
     }
-#endregion
+    #endregion
 
-#region Methods
+    #region Methods
     private double ParseMixedFraction(string s)
     {
         double d = 0;
@@ -680,7 +680,12 @@ class Ingredient
 #region Overrides
     public static Ingredient operator +(Ingredient a, Ingredient b)
     {
-        return new Ingredient(a.Amount + b.Amount, a.Measurement, a.Name);
+        return new Ingredient(a.AmountPerServing + b.AmountPerServing, a.Measurement, a.Name, 1);
     }
-#endregion
+
+    public static Ingredient operator *(Ingredient a, double m)
+    {
+        return new Ingredient(a.AmountPerServing * m, a.Measurement, a.Name, 1);
+    }
+    #endregion
 }
