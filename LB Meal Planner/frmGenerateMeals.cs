@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Calendar.v3.Data;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Design.PluralizationServices;
@@ -204,7 +205,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeBreakfast.Value.Hour, timeBreakfast.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -223,9 +224,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -248,7 +247,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeBrunch.Value.Hour, timeBrunch.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -267,9 +266,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -292,7 +289,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeLunch.Value.Hour, timeLunch.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -311,9 +308,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -336,7 +331,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeDinner.Value.Hour, timeDinner.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -355,10 +350,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
-                        
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -381,7 +373,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeSupper.Value.Hour, timeSupper.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -400,9 +392,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -425,7 +415,7 @@ namespace LB_Meal_Planner
                         EventDateTime start = new EventDateTime();
                         DateTime d = new DateTime(dateStartThisDay.Value.Year, dateStartThisDay.Value.Month, dateStartThisDay.Value.Day,
                             timeSnack.Value.Hour, timeSnack.Value.Minute, 0);
-                        d.AddDays(n);
+                        d = d.AddDays(n);
                         start.DateTime = d;
                         gEvent.Start = start;
                         EventDateTime end = new EventDateTime();
@@ -444,9 +434,7 @@ namespace LB_Meal_Planner
                             remindersData.Overrides = reminderOverrides;
                             gEvent.Reminders = remindersData;
                         }
-#if RELEASE
-                        Program.service.Events.Insert(gEvent, url).Execute();
-#endif
+                        Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                         ++m;
                     }
                 }
@@ -454,7 +442,24 @@ namespace LB_Meal_Planner
                 // Grocery list generation
                 if (chkGenerateGroceryList.Checked)
                 {
-                    Console.Write(groceryList.ToString());
+                    Event gEvent = new Event();
+                    gEvent.Summary = "Grocery List " + DateTime.Today.ToString("MM-dd-yyyy");
+                    gEvent.Description = groceryList.ToString();
+                    EventDateTime start = new EventDateTime();
+                    start.Date = DateTime.Today.ToString("yyyy-MM-dd");
+                    gEvent.Start = start;
+                    EventDateTime end = new EventDateTime();
+                    end.Date = DateTime.Today.ToString("yyyy-MM-dd");
+                    gEvent.End = end;
+                    EventReminder er = new EventReminder();
+                    er.Method = "popup";
+                    er.Minutes = 0;
+                    EventReminder[] reminderOverrides = new EventReminder[] { er };
+                    Event.RemindersData remindersData = new Event.RemindersData();
+                    remindersData.UseDefault = false;
+                    remindersData.Overrides = reminderOverrides;
+                    gEvent.Reminders = remindersData;
+                    Program.gCalendarService.Events.Insert(gEvent, url).Execute();
                 }
 
                 MessageBox.Show("Generated meal plan successfully!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -556,7 +561,7 @@ class GroceryList
 #region Overrides
     public override string ToString()
     {
-        string final = "GROCERY LIST :\n";
+        string final = "";
         var ps = PluralizationService.CreateService(new CultureInfo("en-US"));
         foreach (Ingredient n in ls)
         {
@@ -658,9 +663,9 @@ class Ingredient
         Measurement = measurement;
         Name = name;
     }
-    #endregion
+#endregion
 
-    #region Methods
+#region Methods
     private double ParseMixedFraction(string s)
     {
         double d = 0;
@@ -704,5 +709,5 @@ class Ingredient
     {
         return new Ingredient(a.AmountPerServing * m, a.Measurement, a.Name, 1);
     }
-    #endregion
+#endregion
 }

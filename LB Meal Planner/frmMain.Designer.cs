@@ -89,14 +89,14 @@
             // generateMealsToolStripMenuItem
             // 
             this.generateMealsToolStripMenuItem.Name = "generateMealsToolStripMenuItem";
-            this.generateMealsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.generateMealsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.generateMealsToolStripMenuItem.Text = "&Generate Meals";
             this.generateMealsToolStripMenuItem.Click += new System.EventHandler(this.generateMealsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -113,21 +113,21 @@
             // addRecipeToolStripMenuItem
             // 
             this.addRecipeToolStripMenuItem.Name = "addRecipeToolStripMenuItem";
-            this.addRecipeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.addRecipeToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.addRecipeToolStripMenuItem.Text = "&Add Recipe";
             this.addRecipeToolStripMenuItem.Click += new System.EventHandler(this.addRecipeToolStripMenuItem_Click);
             // 
             // deleteRecipeToolStripMenuItem
             // 
             this.deleteRecipeToolStripMenuItem.Name = "deleteRecipeToolStripMenuItem";
-            this.deleteRecipeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteRecipeToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.deleteRecipeToolStripMenuItem.Text = "&Delete Recipe";
             this.deleteRecipeToolStripMenuItem.Click += new System.EventHandler(this.deleteRecipeToolStripMenuItem_Click);
             // 
             // editRecipesToolStripMenuItem
             // 
             this.editRecipesToolStripMenuItem.Name = "editRecipesToolStripMenuItem";
-            this.editRecipesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editRecipesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.editRecipesToolStripMenuItem.Text = "&Edit Recipe";
             this.editRecipesToolStripMenuItem.Click += new System.EventHandler(this.editRecipesToolStripMenuItem_Click);
             // 
@@ -147,34 +147,34 @@
             this.aZToolStripMenuItem,
             this.zAToolStripMenuItem});
             this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
-            this.sortToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sortToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.sortToolStripMenuItem.Text = "&Sort";
             // 
             // noSortingToolStripMenuItem
             // 
             this.noSortingToolStripMenuItem.Name = "noSortingToolStripMenuItem";
-            this.noSortingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.noSortingToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.noSortingToolStripMenuItem.Text = "&No Sorting";
             this.noSortingToolStripMenuItem.Click += new System.EventHandler(this.noSortingToolStripMenuItem_Click);
             // 
             // aZToolStripMenuItem
             // 
             this.aZToolStripMenuItem.Name = "aZToolStripMenuItem";
-            this.aZToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aZToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.aZToolStripMenuItem.Text = "&A-Z (Ascending)";
             this.aZToolStripMenuItem.Click += new System.EventHandler(this.aZToolStripMenuItem_Click);
             // 
             // zAToolStripMenuItem
             // 
             this.zAToolStripMenuItem.Name = "zAToolStripMenuItem";
-            this.zAToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.zAToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.zAToolStripMenuItem.Text = "&Z-A (Descending)";
             this.zAToolStripMenuItem.Click += new System.EventHandler(this.zAToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "&Settings";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -358,6 +358,7 @@
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.grpRecipes);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "LB Meal Planner";
